@@ -102,8 +102,55 @@ void chooseLevel(int *level, int *maxTries) {
     }
 }
 
+void startNewGame (Player *player) {
+    char word[20], hint[50];
+    int maxTries, wrongGuesses = 0;
+    chooseLevel(&player->level, &maxTries);
 
+    chooseWord(player->level, word, hint);
+    int wordLength = strlen(word);
+    int guessed[wordLength];
+    memset(guessed, 0, sizeof(guessed));
 
+    char guess;
+    while (wrongGuesses < maxTries) {
+        clearScreen();
+        printHeader(player->name, player->score, player->level);
+        printf("Hint: %s\n", hint);
+        printWord(word, guessed);
+        printHangman(wrongGuesses);
+        printf("Guess a letter: ");
+        scanf(" %c", &guess);
 
+        int found = 0;
+        for (int i = 0; i < wordLength; i++) {
+            if (word[i] == guess && !guessed[i]) {
+                guessed[i] = 1;
+                found = 1;
+            }
+        }
 
+        if (!found) wrongGuesses++;
 
+        if (checkWin(guessed, wordLength)) {
+            clearScreen();
+            printHeader(player->name, player->score, player->level);
+            printf("Hint: %s\n", hint);
+            printWord(word, guessed);
+            printf("\n?? Congratulations! You guessed the word!\n");
+            player->score += 10;
+            break;
+        }
+    }
+
+    if (!checkWin(guessed, wordLength)) {
+        clearScreen();
+        printHeader(player->name, player->score, player->level);
+        printHangman(wrongGuesses);
+        printf("\n?? You lost! The word was: %s\n", word);
+    }
+
+    printf("\nPress Enter to return to menu...");
+    getchar();
+    getchar();
+}
