@@ -4,10 +4,9 @@
 #include <time.h>
 
 #ifdef _WIN32
-#define CLEAR_COMMAND "cls"
-//system(CLEAR_COMMAND)
-#else 
-#define CLEAR_COMMAND "clear"
+    #define CLEAR_COMMAND "cls"
+#else
+    #define CLEAR_COMMAND "clear"
 #endif
 
 #define MAX_TRIES_EASY 10
@@ -16,28 +15,26 @@
 #define WORD_LIST_SIZE 5
 #define LEADERBOARD_SIZE 5
 
+// Structure for storing player details
 typedef struct {
-	char name[50];
-	int score;
-	int level;
-}player;
+    char name[50];
+    int score;
+    int level;
+} Player;
 
-const char* easyWords[WORD_LIST_SIZE]={
-"apple" , "ball" , " cat" , "dog" , "fish"};
-const char* easyHints[WORD_LIST_SIZE]={
-"a fruit" , "it bounces" , "a pet " , "barks" , "lives in water "};
-const char*moderateWords[WORD_LIST_SIZE]={
-"planet" , "butter ", " school" , "garden" , "rocket"};
-const char*moderateHints[WORD_LIST_SIZE]={
-"orbits the sun" , "used on toast" ,"place to study" , "has flowers" , "goes to space "};
-const char*hardWords[WORD_LIST_SIZE]={
-"computer" , "hangman" ,"electric" , "triangle" , "magnet"};
-const char* hardHints[WORD_LIST_SIZE]={"electronic device" , "this game" , "power type " , "3 sided shape " , "attracts metal" };
+// Word bank
+const char *easyWords[WORD_LIST_SIZE] = {"apple", "ball", "cat", "dog", "fish"};
+const char *easyHints[WORD_LIST_SIZE] = {"A fruit", "It bounces", "A pet", "Barks", "Lives in water"};
 
-void clearScreen(){
-	system(CLEAR_COMMAND); //clear , cls 
+const char *moderateWords[WORD_LIST_SIZE] = {"planet", "butter", "school", "garden", "rocket"};
+const char *moderateHints[WORD_LIST_SIZE] = {"Orbits the sun", "Used on toast", "Place to study", "Has flowers", "Goes to space"};
+
+const char *hardWords[WORD_LIST_SIZE] = {"computer", "hangman", "electric", "triangle", "magnet"};
+const char *hardHints[WORD_LIST_SIZE] = {"Electronic device", "This game", "Power type", "3-sided shape", "Attracts metal"};
+
+void clearScreen() {
+    system(CLEAR_COMMAND);
 }
-
 
 void printHeader(char *name, int score, int level) {
     printf("=============================================\n");
@@ -102,7 +99,7 @@ void chooseLevel(int *level, int *maxTries) {
     }
 }
 
-void startNewGame (Player *player) {
+void startNewGame(Player *player) {
     char word[20], hint[50];
     int maxTries, wrongGuesses = 0;
     chooseLevel(&player->level, &maxTries);
@@ -154,3 +151,29 @@ void startNewGame (Player *player) {
     getchar();
     getchar();
 }
+
+void showMainMenu() {
+    printf("\n========== HANGMAN GAME ==========\n");
+    printf("1. Start New Game\n");
+    printf("2. View Leaderboard\n");
+    printf("3. Exit Game\n");
+    printf("==================================\n");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
