@@ -159,6 +159,34 @@ void showMainMenu() {
     printf("3. Exit Game\n");
     printf("==================================\n");
 }
+void saveLeaderboard(Player leaderboard[]) {
+    FILE *file = fopen("leaderboard.txt", "w");
+    if (file) {
+        for (int i = 0; i < LEADERBOARD_SIZE; i++) {
+            fprintf(file, "%s %d %d\n", leaderboard[i].name, leaderboard[i].score, leaderboard[i].level);
+        }
+        fclose(file);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
