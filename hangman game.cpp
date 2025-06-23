@@ -169,8 +169,22 @@ void saveLeaderboard(Player leaderboard[]) {
     }
 }
 
-
-
+void loadLeaderboard(Player leaderboard[]) {
+    FILE *file = fopen("leaderboard.txt", "r");
+    if (file) {
+        for (int i = 0; i < LEADERBOARD_SIZE; i++) {
+            fscanf(file, "%49s %d %d", leaderboard[i].name, &leaderboard[i].score, &leaderboard[i].level);
+        }
+        fclose(file);
+    } else {
+        // Initialize empty leaderboard if file doesn't exist
+        for (int i = 0; i < LEADERBOARD_SIZE; i++) {
+            strcpy(leaderboard[i].name, "---");
+            leaderboard[i].score = 0;
+            leaderboard[i].level = 0;
+        }
+    }
+}
 
 
 
