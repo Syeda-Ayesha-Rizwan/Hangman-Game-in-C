@@ -187,6 +187,21 @@ void loadLeaderboard(Player leaderboard[]) {
 }
 
 
+void displayLeaderboard(Player leaderboard[]) {
+    clearScreen();
+    printf("========== TOP PLAYERS ==========\n");
+    for (int i = 0; i < LEADERBOARD_SIZE; i++) {
+        if (leaderboard[i].score > 0) {
+            printf("%2d. %-20s %-6d (Level: %d)\n", 
+                  i+1, leaderboard[i].name, leaderboard[i].score, leaderboard[i].level);
+        }
+    }
+    printf("=================================\n");
+    printf("\nPress Enter to continue...");
+    getchar(); getchar();
+}
+
+
 
 
 
