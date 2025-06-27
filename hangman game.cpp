@@ -186,7 +186,6 @@ void loadLeaderboard(Player leaderboard[]) {
     }
 }
 
-
 void displayLeaderboard(Player leaderboard[]) {
     clearScreen();
     printf("========== TOP PLAYERS ==========\n");
@@ -201,10 +200,63 @@ void displayLeaderboard(Player leaderboard[]) {
     getchar(); getchar();
 }
 
+/* ========== MAIN FUNCTION ========== */
+int main() {
+    srand(time(0));
+    
+    // Initialize leaderboard
+    Player leaderboard[LEADERBOARD_SIZE];
+    loadLeaderboard(leaderboard);
+    
+    // Current player setup
+    Player player = {0};
+    printf("Enter your name: ");
+    fgets(player.name, 50, stdin);
+    player.name[strcspn(player.name, "\n")] = '\0';
+    player.score = 0;
+    player.level = 1;
 
+    int choice;
+    while (1) {
+        clearScreen();
+        showMainMenu();
+        printf("Select option (1-3): ");
+        scanf("%d", &choice);
+        getchar(); 
 
-
-
+        switch (choice) {
+            case 1: // New Game
+                startNewGame(&player);
+                
+                // Update leaderboard if score is high enough
+                for (int i = 0; i < LEADERBOARD_SIZE; i++) {
+                    if (player.score > leaderboard[i].score) {
+                        // Shift lower scores down
+                        for (int j = LEADERBOARD_SIZE-1; j > i; j--) {
+                            leaderboard[j] = leaderboard[j-1];
+                        }
+                        // Insert new high score
+                        leaderboard[i] = player;
+                        saveLeaderboard(leaderboard);
+                        break;
+                    }
+                }
+                break;
+                
+            case 2: // Leaderboard
+                displayLeaderboard(leaderboard);
+                break;
+                
+            case 3: // Exit
+                printf("\nThank you for playing, %s!\n", player.name);
+                return 0;
+                
+            default:
+                printf("Invalid choice! Please select 1-3.\n");
+                getchar();
+        }
+    }
+}
 
 
 
